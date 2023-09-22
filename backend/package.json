@@ -4,11 +4,12 @@
   "description": "REST API for books catalog project, based on json-server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "json-server books.js"
+    "start:fresh": "json-server books.js --middlewares ./middlewares/add-new-book.js --id isbn",
+    "start:static": "json-server --watch db.json --middlewares ./middlewares/add-new-book.js --id isbn"
   },
   "dependencies": {
     "@faker-js/faker": "^8.1.0",
+    "formidable": "^3.5.1",
     "json-server": "^0.17.3"
   }
 }

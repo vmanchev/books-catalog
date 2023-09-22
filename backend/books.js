@@ -6,7 +6,7 @@ function generateBooks() {
   for (let i = 0; i < 100; i++) {
     items.books.push({
       author: faker.person.fullName(),
-      isbn: faker.helpers.unique(faker.commerce.isbn),
+      isbn: faker.commerce.isbn(),
       title: faker.commerce.productName(),
       description: faker.lorem.paragraph(25),
       cover: faker.image.urlLoremFlickr({
