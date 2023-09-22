@@ -1,0 +1,14 @@
+{
+  "name": "books-catalog-api",
+  "version": "0.0.1",
+  "description": "REST API for books catalog project, based on json-server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "json-server books.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.1.0",
+    "json-server": "^0.17.3"
+  }
+}
