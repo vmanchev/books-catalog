@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.page {
+  &__header,
+  &__footer {
+    flex: 0 0 auto;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__footer {
+    background: #f5f5f5;
+    padding: 10px;
+    text-align: center;
+  }
+}
