@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 });
 app.get('/books', getAllBooks);
 app.get('/books/:isbn', getBookByIsbn);
-app.get('/descriptions/:isbn', getDescriptionByIsbn);
+app.get('/books/:isbn/description', getDescriptionByIsbn);
 app.post('/books', addNewBook);
 app.delete('/books/:isbn', deleteBook);
 

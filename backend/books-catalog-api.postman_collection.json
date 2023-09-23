@@ -47,13 +47,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/descriptions/978-1-105-18402-4",
+					"raw": "{{host}}/books/978-1-105-18402-4/description",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"descriptions",
-						"978-1-105-18402-4"
+						"books",
+						"978-1-105-18402-4",
+						"description"
 					]
 				}
 			},
