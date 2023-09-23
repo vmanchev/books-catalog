@@ -12,18 +12,48 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/books?author_like=Mohr",
+					"raw": "{{host}}/books",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a book by ISBN",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/books/978-1-105-18402-4",
+					"host": [
+						"{{host}}"
 					],
-					"query": [
-						{
-							"key": "author_like",
-							"value": "Mohr"
-						}
+					"path": [
+						"books",
+						"978-1-105-18402-4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a description by ISBN",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/descriptions/978-1-105-18402-4",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"descriptions",
+						"978-1-105-18402-4"
 					]
 				}
 			},
@@ -35,7 +65,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/books?author_like=e&title_like=b&_sort=title&_order=desc&_page=1&_limit=2",
+					"raw": "{{host}}/books?keyword=cla&sort=author&order=asc&page=1&limit=10",
 					"host": [
 						"{{host}}"
 					],
@@ -44,28 +74,24 @@
 					],
 					"query": [
 						{
-							"key": "author_like",
-							"value": "e"
+							"key": "keyword",
+							"value": "cla"
 						},
 						{
-							"key": "title_like",
-							"value": "b"
+							"key": "sort",
+							"value": "author"
 						},
 						{
-							"key": "_sort",
-							"value": "title"
+							"key": "order",
+							"value": "asc"
 						},
 						{
-							"key": "_order",
-							"value": "desc"
-						},
-						{
-							"key": "_page",
+							"key": "page",
 							"value": "1"
 						},
 						{
-							"key": "_limit",
-							"value": "2"
+							"key": "limit",
+							"value": "10"
 						}
 					]
 				}
@@ -82,28 +108,28 @@
 					"formdata": [
 						{
 							"key": "title",
-							"value": "book title",
+							"value": "sdf",
 							"type": "text"
 						},
 						{
 							"key": "description",
-							"value": "book description",
+							"value": "sdf",
 							"type": "text"
 						},
 						{
 							"key": "author",
-							"value": "book author",
+							"value": "asdf",
 							"type": "text"
 						},
 						{
 							"key": "isbn",
-							"value": "978-1-9833-2914-6",
+							"value": "sdf",
 							"type": "text"
 						},
 						{
 							"key": "cover",
 							"type": "file",
-							"src": "/C:/Users/User/Pictures/nokia.jpg"
+							"src": "Screenshot_20220812-114113_2.jpg"
 						}
 					]
 				},
@@ -125,13 +151,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/books/666",
+					"raw": "{{host}}/books/sdf",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"books",
-						"666"
+						"sdf"
 					]
 				}
 			},

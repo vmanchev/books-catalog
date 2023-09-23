@@ -1,61 +1,40 @@
 const formidable = require('formidable');
-const fs = require('fs');
+const getState = require('../helpers/get-state');
+const saveState = require('../helpers/save-state');
+const getApiBaseUrl = require('../helpers/get-api-base-url');
+const isValidIsbn = require('../helpers/is-valid-isbn');
+const saveCoverImage = require('../helpers/save-cover-image');
 
-function generateFileName(originalFilename) {
-  return (
-    new Date().getTime() +
-    '-' +
-    originalFilename.toLowerCase().replace(/ /g, '-')
-  );
-}
+module.exports = async (req, res) => {
+  const state = getState();
 
-function isValidIsbn(providedIsbn, dbState) {
-  if (!dbState.books || !dbState.books.length) {
-    return true;
-  }
+  const form = new formidable.IncomingForm();
 
-  const isbns = dbState.books.map((book) => book.isbn);
+  [fields, files] = await form.parse(req);
 
-  return !isbns.includes(providedIsbn);
-}
+  if (!isValidIsbn(fields.isbn[0], state)) {
+    res.status(409).json({ error: 'ISBN.DUPLICATE' });
+  } else {
+    // upload cover image
+    const newFileName = saveCoverImage(files.cover[0]);
 
-function saveCoverImage() {
-  const filepath = files.cover[0].filepath;
-  const newFileName = generateFileName(files.cover[0].originalFilename);
-  const newpath = `./public/images/${newFileName}`;
-
-  //Copy the uploaded file to a custom folder
-  fs.copyFileSync(filepath, newpath);
-
-  return newFileName;
-}
-
-module.exports = async (req, res, next) => {
-  // add new book
-  if (req.url === '/books' && req.method === 'POST') {
-    // Prepare file upload
-    //Create an instance of the form object
-    const form = new formidable.IncomingForm();
-
-    [fields, files] = await form.parse(req);
-
-    // Make sure the provided `isbn` is unique
-    if (!isValidIsbn(fields.isbn[0], req.app.db.getState())) {
-      res.status(409).json({ error: 'ISBN.DUPLICATE' });
-    } else {
-      const newFileName = saveCoverImage(files.cover[0]);
-
-      req.body.isbn = fields.isbn[0];
-      req.body.author = fields.author[0];
-      req.body.title = fields.title[0];
-      req.body.cover = `http://localhost:3000/images/${newFileName}`;
-      req.body.description =
+    const book = {
+      isbn: fields.isbn[0],
+      author: fields.author[0],
+      title: fields.title[0],
+      cover: `${getApiBaseUrl(req)}/images/${newFileName}`,
+      description:
         fields.description && fields.description[0]
           ? fields.description[0]
-          : null;
-      next();
-    }
-  } else {
-    next();
+          : null,
+    };
+
+    state.books.push(book);
+
+    saveState(state);
+
+    const { description, ...rest } = book;
+
+    res.json(rest);
   }
 };
