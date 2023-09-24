@@ -4,8 +4,14 @@
   </mat-toolbar>
 </header>
 
-<books-catalog-listing class="page__content"></books-catalog-listing>
+<main class="page__content">
+  <books-catalog-filter
+    (onKeywordChanged)="filterChangeHandler($event)"
+  ></books-catalog-filter>
+  <books-catalog-listing
+    [books]="books$ | async"
+    [isLoading]="isLoading$ | async"
+  ></books-catalog-listing>
+</main>
 
-<footer class="page__footer">
-  Venelin Manchev &copy; 2023
-</footer>
+<footer class="page__footer">Venelin Manchev &copy; 2023</footer>

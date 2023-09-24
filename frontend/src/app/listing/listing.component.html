@@ -1,10 +1,10 @@
-<div class="table__responsive">
+
   <div class="table__container mat-elevation-z8">
-    <div class="table__loading" *ngIf="isLoading$ | async">
+    <div class="table__loading" *ngIf="isLoading">
       <mat-spinner></mat-spinner>
     </div>
 
-    <table mat-table [dataSource]="books$ | async" class="table__content">
+    <table mat-table [dataSource]="books" class="table__content">
       <!-- Cover -->
       <ng-container matColumnDef="cover">
         <th mat-header-cell *matHeaderCellDef>Cover</th>
@@ -33,6 +33,10 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let book; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No results were found</td>
+      </tr>
     </table>
   </div>
-</div>
+

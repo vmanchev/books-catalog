@@ -1,6 +1,5 @@
 import { BookDescription } from '@models/book-description.type';
 import { Book } from '@models/book.type';
-import { BooksSearchRequest } from '@models/books-search-request.type';
 import { CreateBook } from '@models/create-book.type';
 import { Pagination } from '@models/pagination.type';
 import { Sorting } from '@models/sorting.type';
@@ -9,7 +8,7 @@ import { createAction, props } from '@ngrx/store';
 export const searchBooks = createAction('[Books] Search');
 
 export const setBooksInStore = createAction(
-  '[Books] Set in store',
+  '[Books] Set books',
   props<{ books: Book[] }>()
 );
 
@@ -26,6 +25,16 @@ export const setSorting = createAction(
 export const setKeyword = createAction(
   '[Books] Set keyword',
   props<{ keyword: string }>()
+);
+
+export const setCurrentPage = createAction(
+  '[Books] Set current page',
+  props<{ currentPage: number }>()
+);
+
+export const getPage = createAction(
+  '[Books] Get page No:',
+  props<{ page: number }>()
 );
 
 export const setIsLoading = createAction(

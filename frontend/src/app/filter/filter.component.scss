@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  padding: 0 1.5rem;
+}
+
+.filter {
+  &__container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}

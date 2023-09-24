@@ -6,14 +6,9 @@ export const selectBooksState = createFeatureSelector<fromBooks.State>(
   fromBooks.booksFeatureKey
 );
 
-export const selectSearchParams = createSelector(
+export const selectKeyword = createSelector(
   selectBooksState,
-  (state) =>
-    ({
-      keyword: state.keyword,
-      sorting: state.sorting,
-      pagination: state.pagination,
-    } as BooksSearchRequest)
+  (state) => state.keyword
 );
 
 export const selectPagination = createSelector(
@@ -26,6 +21,18 @@ export const selectSorting = createSelector(
   (state) => state.sorting
 );
 
+export const selectSearchParams = createSelector(
+  selectKeyword,
+  selectSorting,
+  selectPagination,
+  (keyword, sorting, pagination) =>
+    ({
+      keyword: keyword,
+      sorting: sorting,
+      pagination: pagination,
+    } as BooksSearchRequest)
+);
+
 export const selectBooks = createSelector(
   selectBooksState,
   (state) => state.items
@@ -34,4 +41,9 @@ export const selectBooks = createSelector(
 export const selectIsLoading = createSelector(
   selectBooksState,
   (state) => state.isLoading
+);
+
+export const selectCurrentPage = createSelector(
+  selectBooksState,
+  (state) => state.currentPage
 );

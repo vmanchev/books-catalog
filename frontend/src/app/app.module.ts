@@ -17,14 +17,23 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BooksEffects } from '@store/books/books.effects';
 import { ListingComponent } from './listing/listing.component';
 import * as fromBooks from '@store/books/books.reducer';
+import { FilterComponent } from './filter/filter.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [AppComponent, ListingComponent],
+  declarations: [AppComponent, ListingComponent, FilterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
     MatTableModule,

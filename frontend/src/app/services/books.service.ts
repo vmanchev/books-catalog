@@ -51,8 +51,15 @@ export class BooksService {
   private getSearchParamsObject(params: BooksSearchRequest) {
     let searchParams = {
       ...params.sorting,
-      ...params.pagination,
     } as any;
+
+    if (params.pagination) {
+      searchParams = {
+        ...searchParams,
+        page: params.pagination.page,
+        limit: params.pagination.limit,
+      };
+    }
 
     if (params.keyword?.length) {
       searchParams = {

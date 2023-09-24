@@ -1,19 +1,21 @@
-.table {
-  &__responsive {
-    overflow-x: auto;
-    padding: 1.5rem;
-  }
+:host {
+  display: block;
+  overflow-x: auto;
+  padding: 0 1.5rem;
+}
 
+.table {
   &__container {
     position: relative;
     min-height: 200px;
     overflow: auto;
-    width: 800px;
-    margin: 0 auto;
+    margin: 0.5rem auto 1.5rem auto;
+    width: 100%;
+    max-width: 800px;
   }
 
   &__content {
-    width: 100%;
+    width: 800px;
   }
 
   &__loading {

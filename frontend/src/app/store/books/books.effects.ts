@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { delay, switchMap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, withLatestFrom } from 'rxjs/operators';
 import { from } from 'rxjs';
 import * as BooksActions from './books.actions';
 import * as BooksSelectors from './books.selectors';
@@ -14,12 +14,42 @@ export class BooksEffects {
     this.actions$.pipe(
       ofType(BooksActions.searchBooks),
       withLatestFrom(this.store.select(BooksSelectors.selectSearchParams)),
-      switchMap(([__, params]: [Action, BooksSearchRequest]) =>
+      concatMap(([__, params]: [Action, BooksSearchRequest]) =>
+        this.booksService.search(params).pipe(
+          concatMap((result) =>
+            from([
+              BooksActions.setCurrentPage({
+                currentPage: result.pagination.page,
+              }),
+              BooksActions.setBooksInStore({ books: result.books }),
+              BooksActions.setPagination({ pagination: result.pagination }),
+              BooksActions.setIsLoading({ isLoading: false }),
+            ])
+          )
+        )
+      )
+    )
+  );
+
+  getPage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BooksActions.getPage),
+      withLatestFrom(this.store.select(BooksSelectors.selectSearchParams)),
+      concatMap(([action, params]) =>
         this.booksService
-          .search(params)
+          .search({
+            ...params,
+            pagination: {
+              ...params.pagination,
+              page: action.page,
+            },
+          })
           .pipe(
-            switchMap((result) =>
+            concatMap((result) =>
               from([
+                BooksActions.setCurrentPage({
+                  currentPage: result.pagination.page,
+                }),
                 BooksActions.setBooksInStore({ books: result.books }),
                 BooksActions.setPagination({ pagination: result.pagination }),
                 BooksActions.setIsLoading({ isLoading: false }),
