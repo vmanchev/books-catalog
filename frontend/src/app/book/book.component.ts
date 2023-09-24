@@ -13,13 +13,13 @@ import { tap } from 'rxjs';
 })
 export class BookComponent implements OnInit {
   isImageLoading = true;
-  isDescriptionLoading = true;
+  isDescriptionLoading = !this.book.description?.length;
 
   description$ = this.store
     .select(BooksSelectors.getDescriptionByIsbn(this.book.isbn))
     .pipe(
       tap((hasDescription) => {
-        if (hasDescription) {
+        if (hasDescription && !this.book.description) {
           this.isDescriptionLoading = false;
         }
       })
@@ -32,7 +32,9 @@ export class BookComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(BooksActions.getDescription({ isbn: this.book.isbn }));
+    if (!this.book.description) {
+      this.store.dispatch(BooksActions.getDescription({ isbn: this.book.isbn }));
+    }
   }
 
   close() {
