@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ENVIRONMENT } from '../tokens/environment.token';
-import { Environment } from '../types/environment.type';
+import { ENVIRONMENT } from '@tokens/environment.token';
+import { Environment } from '@models/environment.type';
 import { Observable } from 'rxjs';
-import { BooksSearchResponse } from '../types/books-search-response.type';
-import { BooksSearchRequest } from '../types/books-search-request.type';
-import { CreateBook } from '../types/create-book.type';
-import { BookDescription } from '../types/books-description.type';
-import { Book } from '../types/book.type';
+import { BooksSearchResponse } from '@models/books-search-response.type';
+import { BooksSearchRequest } from '@models/books-search-request.type';
+import { CreateBook } from '@models/create-book.type';
+import { BookDescription } from '@models/book-description.type';
+import { Book } from '@models/book.type';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,11 @@ export class BooksService {
 
   search(params?: BooksSearchRequest): Observable<BooksSearchResponse> {
     const options = params
-      ? { params: new HttpParams({ fromObject: params }) }
+      ? {
+          params: new HttpParams({
+            fromObject: this.getSearchParamsObject(params),
+          }),
+        }
       : {};
 
     return this.http.get<BooksSearchResponse>(this.resourcePath, options);
@@ -42,5 +46,21 @@ export class BooksService {
 
   create(book: CreateBook): Observable<Book> {
     return this.http.post<Book>(`${this.resourcePath}`, book);
+  }
+
+  private getSearchParamsObject(params: BooksSearchRequest) {
+    let searchParams = {
+      ...params.sorting,
+      ...params.pagination,
+    } as any;
+
+    if (params.keyword?.length) {
+      searchParams = {
+        ...searchParams,
+        keyword: params.keyword,
+      };
+    }
+
+    return searchParams;
   }
 }

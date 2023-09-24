@@ -1,4 +1,4 @@
-export interface BookDescription {
+export type BookDescription = {
   isbn: string;
   description?: string;
 }

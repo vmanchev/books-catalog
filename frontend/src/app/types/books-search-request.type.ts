@@ -1,7 +1,8 @@
+import { Pagination } from './pagination.type';
+import { Sorting } from './sorting.type';
+
 export type BooksSearchRequest = {
   keyword?: string;
-  sort?: string;
-  order?: 'asc' | 'desc';
-  page?: number;
-  limit?: number;
+  sorting?: Sorting;
+  pagination?: Pick<Pagination, 'page' | 'limit'>;
 };

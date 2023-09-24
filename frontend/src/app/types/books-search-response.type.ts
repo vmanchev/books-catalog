@@ -1,11 +1,7 @@
 import { Book } from './book.type';
+import { Pagination } from './pagination.type';
 
-export interface BooksSearchResponse {
+export type BooksSearchResponse = {
   books: Book[];
-  pagination: {
-    limit: number;
-    page: number;
-    totalCount: number;
-    totalPages: number;
-  };
-}
+  pagination: Pagination;
+};
