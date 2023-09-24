@@ -8,3 +8,28 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.book__dialog {
+  width: 600px;
+  max-width: 90vw !important;
+  height: 70vh;
+
+  .mat-dialog-container {
+    padding: 0;
+  }
+
+  .mat-card-header {
+    display: flex;
+  }
+
+  .mat-card-header-text {
+    margin: 0;
+  }
+
+  .mat-progress-spinner {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    z-index: 0;
+  }
+}

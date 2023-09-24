@@ -30,6 +30,28 @@ export class BooksEffects {
     )
   );
 
+  getDescription$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BooksActions.getDescription),
+      switchMap((action) =>
+        this.booksService
+          .getDescription(action.isbn)
+          .pipe(
+            concatMap((result) =>
+              from([
+                BooksActions.setDescription({
+                  params: {
+                    ...result,
+                    description: result.description ? result.description : '',
+                  },
+                }),
+              ])
+            )
+          )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private booksService: BooksService,

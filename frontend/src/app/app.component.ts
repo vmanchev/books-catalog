@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Book } from '@models/book.type';
 import { Pagination } from '@models/pagination.type';
 import { Sorting } from '@models/sorting.type';
@@ -13,6 +14,7 @@ import {
   of,
   takeUntil,
 } from 'rxjs';
+import { BookComponent } from './book/book.component';
 @Component({
   selector: 'books-catalog-root',
   templateUrl: './app.component.html',
@@ -25,7 +27,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   private destroy$ = new Subject();
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, public dialog: MatDialog) {}
 
   ngAfterViewInit(): void {
     this.books$ = this.store.select(BooksSelectors.selectBooks);
@@ -54,6 +56,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   sortingChangeHandler(sorting: Sorting) {
     this.store.dispatch(BooksActions.setSorting({ sorting }));
+  }
+
+  bookSelectedHandler(book: Book) {
+    this.dialog.open(BookComponent, {
+      data: { ...book },
+      panelClass: 'book__dialog',
+    });
   }
 
   private triggerSearchOnParamsChange() {

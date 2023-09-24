@@ -32,7 +32,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let book; columns: displayedColumns"></tr>
+      <tr mat-row *matRowDef="let book; columns: displayedColumns" (click)="onTableRowClicked(book)"></tr>
 
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="4">No results were found</td>

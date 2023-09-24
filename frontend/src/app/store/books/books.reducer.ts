@@ -53,5 +53,19 @@ export const reducer = createReducer(
   on(BooksActions.setIsLoading, (state, action) => ({
     ...state,
     isLoading: action.isLoading,
-  }))
+  })),
+  on(BooksActions.setDescription, (state, action) => {
+    const items = [...state.items];
+
+    const idx = items.findIndex((item) => item.isbn === action.params.isbn);
+    items[idx] = {
+      ...items[idx],
+      description: action.params.description,
+    };
+
+    return {
+      ...state,
+      items,
+    };
+  })
 );

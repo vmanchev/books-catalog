@@ -12,6 +12,7 @@
     [books]="books$ | async"
     [isLoading]="isLoading$ | async"
     (onSortingChange)="sortingChangeHandler($event)"
+    (onBookSelected)="bookSelectedHandler($event)"
   ></books-catalog-listing>
 
   <books-catalog-paginator [pagination]="paginaton$ | async" (onPaginationChanged)="paginationChangeHandler($event)"></books-catalog-paginator>

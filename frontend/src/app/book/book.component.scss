@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.book {
+  &__card {
+    height: calc(100% - 2rem);
+  }
+
+  &__media {
+    width: 250px;
+    float: left;
+    margin-right: 3rem;
+    position: relative;
+  }
+
+  &__cover {
+    width: 250px;
+    height: 375px;
+    border-radius: 5px;
+  }
+
+  &__isbn {
+    text-align: center;
+  }
+
+  &__header {
+    flex: 1;
+  }
+}
+
+.dialog__close {
+  cursor: pointer;
+}

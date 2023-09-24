@@ -12,10 +12,15 @@ export class ListingComponent {
   @Input() books: Book[];
   @Input() isLoading: boolean;
   @Output() onSortingChange: EventEmitter<Sorting> = new EventEmitter();
+  @Output() onBookSelected: EventEmitter<Book> = new EventEmitter();
 
   displayedColumns: string[] = ['cover', 'title', 'author', 'isbn'];
 
   onMatSortChange(event: Sort) {
     this.onSortingChange.emit(event as Sorting);
+  }
+
+  onTableRowClicked(book: Book) {
+    this.onBookSelected.emit(book);
   }
 }
