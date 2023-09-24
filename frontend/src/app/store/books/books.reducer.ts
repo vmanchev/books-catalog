@@ -8,23 +8,25 @@ export const booksFeatureKey = 'books';
 
 export interface State {
   items: Book[] | null;
-  pagination: Pagination;
-  currentPage: number;
-  sorting: Sorting | null;
+  page: number;
+  limit: number;
+  totalCount: number;
+  totalPages: number;
+  sorting: Sorting;
   keyword: string | null;
   isLoading: boolean;
 }
 
 export const initialState: State = {
   items: null,
-  pagination: {
-    page: 1,
-    limit: 5,
-    totalCount: null,
-    totalPages: null,
+  page: 1,
+  limit: 5,
+  totalCount: null,
+  totalPages: null,
+  sorting: {
+    active: 'title',
+    direction: 'asc',
   },
-  currentPage: null,
-  sorting: null,
   keyword: null,
   isLoading: null,
 };
@@ -36,16 +38,9 @@ export const reducer = createReducer(
     ...state,
     items: action.books,
   })),
-  on(BooksActions.setPagination, (state, action) => ({
-    ...state,
-    pagination: action.pagination,
-  })),
   on(BooksActions.updatePagination, (state, action) => ({
     ...state,
-    pagination: {
-      ...state.pagination,
-      ...action.pagination,
-    },
+    ...action.pagination,
   })),
   on(BooksActions.setSorting, (state, action) => ({
     ...state,
@@ -58,12 +53,5 @@ export const reducer = createReducer(
   on(BooksActions.setIsLoading, (state, action) => ({
     ...state,
     isLoading: action.isLoading,
-  })),
-  on(BooksActions.setCurrentPage, (state, action) => ({
-    ...state,
-    currentPage: action.currentPage,
-  })),
-  on(BooksActions.resetState, () => ({
-    ...initialState,
   }))
 );

@@ -1,4 +1,4 @@
 export type Sorting = {
-  property?: string;
-  direction?: 'asc' | 'desc';
+  active: string;
+  direction: 'asc' | 'desc';
 };

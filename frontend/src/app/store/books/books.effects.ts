@@ -14,48 +14,18 @@ export class BooksEffects {
     this.actions$.pipe(
       ofType(BooksActions.searchBooks),
       withLatestFrom(this.store.select(BooksSelectors.selectSearchParams)),
-      concatMap(([__, params]: [Action, BooksSearchRequest]) =>
+      switchMap(([__, params]: [Action, BooksSearchRequest]) =>
         this.booksService.search(params).pipe(
           concatMap((result) =>
             from([
-              BooksActions.setCurrentPage({
-                currentPage: result.pagination.page,
-              }),
               BooksActions.setBooksInStore({ books: result.books }),
-              BooksActions.setPagination({ pagination: result.pagination }),
+              BooksActions.updatePagination({
+                pagination: result.pagination,
+              }),
               BooksActions.setIsLoading({ isLoading: false }),
             ])
           )
         )
-      )
-    )
-  );
-
-  getPage$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(BooksActions.getPage),
-      withLatestFrom(this.store.select(BooksSelectors.selectSearchParams)),
-      switchMap(([action, params]) =>
-        this.booksService
-          .search({
-            ...params,
-            pagination: {
-              ...params.pagination,
-              page: action.page,
-            },
-          })
-          .pipe(
-            concatMap((result) =>
-              from([
-                BooksActions.setCurrentPage({
-                  currentPage: result.pagination.page,
-                }),
-                BooksActions.setBooksInStore({ books: result.books }),
-                BooksActions.setPagination({ pagination: result.pagination }),
-                BooksActions.setIsLoading({ isLoading: false }),
-              ])
-            )
-          )
       )
     )
   );

@@ -12,8 +12,8 @@ module.exports = (req, res) => {
 
   // get query params and set default values for missing required params
   let keyword = getFilteredParam(req.query.keyword);
-  let sort = getFilteredParam(req.query.sort) || 'title';
-  let order = getFilteredParam(req.query.order) || 'asc';
+  let sortProperty = getFilteredParam(req.query.active) || 'title';
+  let sortDirection = getFilteredParam(req.query.direction) || 'asc';
   let page = Number(getFilteredParam(req.query.page)) || 1;
   let limit = Number(getFilteredParam(req.query.limit)) || 5;
 
@@ -21,7 +21,7 @@ module.exports = (req, res) => {
   books = filterByKeyword(books, keyword);
 
   // sort by `title` or `author` in selected direction
-  books = sortItems(books, sort, order);
+  books = sortItems(books, sortProperty, sortDirection);
 
   // from the filtered and sorted list of books, get the items for current page
   res.json(getPaginatedResult(books, page, limit));

@@ -1,11 +1,14 @@
-module.exports = (books, sort, order) => {
-  if (!['title', 'author'].includes(sort) || ['asc', 'desc'].includes(order)) {
+module.exports = (books, property, direction) => {
+  if (
+    !['title', 'author'].includes(property) ||
+    !['asc', 'desc'].includes(direction)
+  ) {
     return books;
   }
 
   return books.sort((a, b) =>
-    order === 'asc'
-      ? a[sort].localeCompare(b[sort])
-      : b[sort].localeCompare(a[sort])
+    direction === 'asc'
+      ? a[property].localeCompare(b[property])
+      : b[property].localeCompare(a[property])
   );
 };

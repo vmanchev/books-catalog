@@ -12,11 +12,6 @@ export const setBooksInStore = createAction(
   props<{ books: Book[] }>()
 );
 
-export const setPagination = createAction(
-  '[Books] Set pagination',
-  props<{ pagination: Pagination }>()
-);
-
 export const updatePagination = createAction(
   '[Books] Update pagination',
   props<{ pagination: Partial<Pagination> }>()
@@ -32,22 +27,10 @@ export const setKeyword = createAction(
   props<{ keyword: string }>()
 );
 
-export const setCurrentPage = createAction(
-  '[Books] Set current page',
-  props<{ currentPage: number }>()
-);
-
-export const getPage = createAction(
-  '[Books] Get page No:',
-  props<{ page: number }>()
-);
-
 export const setIsLoading = createAction(
   '[Books] Set isLoading',
   props<{ isLoading: boolean }>()
 );
-
-export const resetState = createAction('[Books] Reset');
 
 export const getDescription = createAction(
   '[Books] Get description',

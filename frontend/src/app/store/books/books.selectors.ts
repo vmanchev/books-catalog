@@ -11,10 +11,12 @@ export const selectKeyword = createSelector(
   (state) => state.keyword
 );
 
-export const selectPagination = createSelector(
-  selectBooksState,
-  (state) => state.pagination
-);
+export const selectPagination = createSelector(selectBooksState, (state) => ({
+  page: state.page,
+  limit: state.limit,
+  totalCount: state.totalCount,
+  totalPages: state.totalPages,
+}));
 
 export const selectSorting = createSelector(
   selectBooksState,
@@ -43,17 +45,17 @@ export const selectIsLoading = createSelector(
   (state) => state.isLoading
 );
 
-export const selectCurrentPage = createSelector(
-  selectBooksState,
-  (state) => state.currentPage
-);
-
 export const selectLimit = createSelector(
-  selectPagination,
+  selectBooksState,
   (state) => state?.limit ?? null
 );
 
 export const selectPage = createSelector(
-  selectPagination,
+  selectBooksState,
   (state) => state?.page ?? null
 );
+
+export const selectPageAndLimit = createSelector(selectBooksState, (state) => ({
+  page: state?.page ?? null,
+  limit: state?.limit ?? null,
+}));

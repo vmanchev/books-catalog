@@ -1,10 +1,18 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { Book } from '@models/book.type';
 import { Pagination } from '@models/pagination.type';
+import { Sorting } from '@models/sorting.type';
 import { Store } from '@ngrx/store';
 import * as BooksActions from '@store/books/books.actions';
 import * as BooksSelectors from '@store/books/books.selectors';
-import { Observable, Subject, combineLatest, of, takeUntil } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  combineLatest,
+  distinctUntilChanged,
+  of,
+  takeUntil,
+} from 'rxjs';
 @Component({
   selector: 'books-catalog-root',
   templateUrl: './app.component.html',
@@ -32,7 +40,6 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   filterChangeHandler(keyword: string) {
-    this.store.dispatch(BooksActions.setCurrentPage({ currentPage: null }));
     this.store.dispatch(
       BooksActions.updatePagination({ pagination: { page: 1 } })
     );
@@ -41,17 +48,24 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     );
   }
 
-  updatePaginationConfig(pagination: Pick<Pagination, 'page' | 'limit'>) {
+  paginationChangeHandler(pagination: Pick<Pagination, 'page' | 'limit'>) {
     this.store.dispatch(BooksActions.updatePagination({ pagination }));
+  }
+
+  sortingChangeHandler(sorting: Sorting) {
+    this.store.dispatch(BooksActions.setSorting({ sorting }));
   }
 
   private triggerSearchOnParamsChange() {
     combineLatest([
-      this.store.select(BooksSelectors.selectPage),
-      this.store.select(BooksSelectors.selectLimit),
+      this.store.select(BooksSelectors.selectPageAndLimit),
       this.store.select(BooksSelectors.selectKeyword),
+      this.store.select(BooksSelectors.selectSorting),
     ])
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => {
         this.store.dispatch(BooksActions.setIsLoading({ isLoading: true }));
         this.store.dispatch(BooksActions.searchBooks());
