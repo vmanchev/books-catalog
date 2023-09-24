@@ -1,3 +1,4 @@
+import { NavigationExtras } from '@angular/router';
 import { BookDescription } from '@models/book-description.type';
 import { Book } from '@models/book.type';
 import { CreateBook } from '@models/create-book.type';
@@ -46,3 +47,12 @@ export const submitNewBook = createAction(
   '[Books] Submit to API',
   props<{ book: CreateBook }>()
 );
+
+export const setError = createAction(
+  '[Books] Set error',
+  props<{ error: string }>()
+);
+
+export const resetError = createAction('[Books] Reset error');
+
+export const resetState = createAction('[Books] Reset state');

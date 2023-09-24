@@ -15,6 +15,7 @@ export interface State {
   sorting: Sorting;
   keyword: string | null;
   isLoading: boolean;
+  error: string | null;
 }
 
 export const initialState: State = {
@@ -29,6 +30,7 @@ export const initialState: State = {
   },
   keyword: null,
   isLoading: null,
+  error: null,
 };
 
 export const reducer = createReducer(
@@ -53,6 +55,17 @@ export const reducer = createReducer(
   on(BooksActions.setIsLoading, (state, action) => ({
     ...state,
     isLoading: action.isLoading,
+  })),
+  on(BooksActions.setError, (state, action) => ({
+    ...state,
+    error: action.error,
+  })),
+  on(BooksActions.resetError, (state) => ({
+    ...state,
+    error: null,
+  })),
+  on(BooksActions.resetState, () => ({
+    ...initialState,
   })),
   on(BooksActions.setDescription, (state, action) => {
     const items = [...state.items];

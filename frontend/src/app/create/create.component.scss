@@ -1,0 +1,60 @@
+:host {
+  display: block;
+  padding: 0 1.5rem;
+}
+
+.card {
+  &__container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+.form {
+  &__main {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+      gap: 10%;
+    }
+  }
+
+  &__meta,
+  &__cover {
+    flex: 0 0 45%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__cover {
+    @media screen and (min-width: 768px) {
+      .cover__select {
+        height: 100%;
+      }
+    }
+  }
+
+  &__description {
+    width: 100%;
+  }
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &__image {
+    height: 140px;
+    width: fit-content;
+  }
+
+  &__delete {
+    position: absolute;
+    left: calc(50% - 12px);
+    top: calc(50% - 30px);
+  }
+}

@@ -65,3 +65,8 @@ export const getDescriptionByIsbn = (isbn: string) =>
     selectBooks,
     (books) => books.find((book) => book.isbn === isbn).description
   );
+
+export const selectError = createSelector(
+  selectBooksState,
+  (state) => state?.error
+);

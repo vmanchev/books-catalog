@@ -45,7 +45,18 @@ export class BooksService {
   }
 
   create(book: CreateBook): Observable<Book> {
-    return this.http.post<Book>(`${this.resourcePath}`, book);
+    const formData = new FormData();
+
+    formData.append('isbn', book.isbn);
+    formData.append('title', book.title);
+    formData.append('author', book.author);
+    formData.append('cover', book.cover);
+
+    if (book.description?.length) {
+      formData.append('description', book.description);
+    }
+
+    return this.http.post<Book>(`${this.resourcePath}`, formData);
   }
 
   private getSearchParamsObject(params: BooksSearchRequest) {

@@ -1,0 +1,103 @@
+<form [formGroup]="form" type="multipart/form-data" (ngSubmit)="handleSubmit()">
+  <div class="card__container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Add new book</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="form__main">
+          <div class="form__meta">
+            <mat-form-field>
+              <mat-label>Title</mat-label>
+              <input matInput formControlName="title" type="text" />
+              <mat-error
+                *ngIf="
+                  form.controls.title.errors &&
+                  form.controls.title.errors['required']
+                "
+                >Required field</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Author</mat-label>
+              <input matInput formControlName="author" type="text" />
+              <mat-error
+                *ngIf="
+                  form.controls.author.errors &&
+                  form.controls.author.errors['required']
+                "
+                >Required field</mat-error
+              >
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>ISBN</mat-label>
+              <input matInput formControlName="isbn" type="search" />
+              <mat-error
+                *ngIf="
+                  form.controls.isbn.errors &&
+                  form.controls.isbn.errors['required']
+                "
+                >Required field</mat-error
+              >
+              <mat-error
+                *ngIf="
+                  form.controls.isbn.errors &&
+                  form.controls.isbn.errors['duplicate']
+                "
+                >This ISBN is already in use</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div class="form__cover">
+            <div *ngIf="selectedFile" class="cover">
+              <img [src]="srcResult" class="cover__image" />
+              <span class="cover__name">{{ selectedFile.name }}</span>
+
+              <button
+                class="cover__delete"
+                mat-raised-button
+                color="warn"
+                (click)="removeFile()"
+              >
+                Delete
+              </button>
+            </div>
+
+            <button
+              *ngIf="!selectedFile"
+              type="button"
+              mat-raised-button
+              (click)="fileInput.click()"
+              class="cover__select"
+            >
+              Choose File
+            </button>
+            <input
+              hidden
+              (change)="onFileSelected($event)"
+              #fileInput
+              accept=".jpeg,.jpg,.png"
+              type="file"
+            />
+          </div>
+        </div>
+
+        <mat-form-field class="form__description">
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            formControlName="description"
+            rows="10"
+          ></textarea>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" type="submit">Save</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</form>

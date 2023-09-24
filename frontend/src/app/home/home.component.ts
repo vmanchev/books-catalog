@@ -22,7 +22,7 @@ import { BookComponent } from './book/book.component';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnDestroy, AfterViewInit {
-  books$: Observable<Book[]>;
+  books$: Observable<Book[]> = this.store.select(BooksSelectors.selectBooks);
   isLoading$: Observable<boolean> = of(true);
   paginaton$: Observable<Pagination> = of({} as Pagination);
 
@@ -31,7 +31,6 @@ export class HomeComponent implements OnDestroy, AfterViewInit {
   constructor(private store: Store, public dialog: MatDialog) {}
 
   ngAfterViewInit(): void {
-    this.books$ = this.store.select(BooksSelectors.selectBooks);
     this.isLoading$ = this.store.select(BooksSelectors.selectIsLoading);
     this.paginaton$ = this.store.select(BooksSelectors.selectPagination);
     this.triggerSearchOnParamsChange();
@@ -40,6 +39,7 @@ export class HomeComponent implements OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.complete();
+    this.store.dispatch(BooksActions.resetState());
   }
 
   filterChangeHandler(keyword: string) {

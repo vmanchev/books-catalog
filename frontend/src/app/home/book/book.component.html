@@ -18,8 +18,11 @@
       />
       <p class="book__isbn">{{ book.isbn }}</p>
     </div>
-    <ng-container *ngIf="description$">
-      <p *ngIf="description$ | async as description">{{ description }}</p>
-    </ng-container>
+
+      <p *ngIf="description?.length; else noDesription">
+        {{ description }}
+      </p>
+      <ng-template #noDesription>(no description found)</ng-template>
+
   </mat-card-content>
 </mat-card>

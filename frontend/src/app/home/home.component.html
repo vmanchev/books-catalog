@@ -13,3 +13,7 @@
   [pagination]="paginaton$ | async"
   (onPaginationChanged)="paginationChangeHandler($event)"
 ></books-catalog-paginator>
+
+<button mat-fab color="primary" class="button__add" [routerLink]="['/add']">
+  <mat-icon>add</mat-icon>
+</button>
