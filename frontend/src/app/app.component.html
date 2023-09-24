@@ -12,6 +12,8 @@
     [books]="books$ | async"
     [isLoading]="isLoading$ | async"
   ></books-catalog-listing>
+
+  <books-catalog-paginator [pagination]="paginaton$ | async" (onPaginationChanged)="updatePaginationConfig($event)"></books-catalog-paginator>
 </main>
 
 <footer class="page__footer">Venelin Manchev &copy; 2023</footer>

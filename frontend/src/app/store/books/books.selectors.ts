@@ -47,3 +47,13 @@ export const selectCurrentPage = createSelector(
   selectBooksState,
   (state) => state.currentPage
 );
+
+export const selectLimit = createSelector(
+  selectPagination,
+  (state) => state?.limit ?? null
+);
+
+export const selectPage = createSelector(
+  selectPagination,
+  (state) => state?.page ?? null
+);

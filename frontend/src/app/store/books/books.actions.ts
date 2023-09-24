@@ -17,6 +17,11 @@ export const setPagination = createAction(
   props<{ pagination: Pagination }>()
 );
 
+export const updatePagination = createAction(
+  '[Books] Update pagination',
+  props<{ pagination: Partial<Pagination> }>()
+);
+
 export const setSorting = createAction(
   '[Books] Set sorting',
   props<{ sorting: Sorting }>()

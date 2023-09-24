@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { from } from 'rxjs';
 import * as BooksActions from './books.actions';
 import * as BooksSelectors from './books.selectors';
@@ -35,7 +35,7 @@ export class BooksEffects {
     this.actions$.pipe(
       ofType(BooksActions.getPage),
       withLatestFrom(this.store.select(BooksSelectors.selectSearchParams)),
-      concatMap(([action, params]) =>
+      switchMap(([action, params]) =>
         this.booksService
           .search({
             ...params,

@@ -8,7 +8,7 @@ export const booksFeatureKey = 'books';
 
 export interface State {
   items: Book[] | null;
-  pagination: Pagination | null;
+  pagination: Pagination;
   currentPage: number;
   sorting: Sorting | null;
   keyword: string | null;
@@ -17,7 +17,12 @@ export interface State {
 
 export const initialState: State = {
   items: null,
-  pagination: null,
+  pagination: {
+    page: 1,
+    limit: 5,
+    totalCount: null,
+    totalPages: null,
+  },
   currentPage: null,
   sorting: null,
   keyword: null,
@@ -34,6 +39,13 @@ export const reducer = createReducer(
   on(BooksActions.setPagination, (state, action) => ({
     ...state,
     pagination: action.pagination,
+  })),
+  on(BooksActions.updatePagination, (state, action) => ({
+    ...state,
+    pagination: {
+      ...state.pagination,
+      ...action.pagination,
+    },
   })),
   on(BooksActions.setSorting, (state, action) => ({
     ...state,

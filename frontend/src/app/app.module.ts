@@ -22,9 +22,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
-  declarations: [AppComponent, ListingComponent, FilterComponent],
+  declarations: [AppComponent, ListingComponent, FilterComponent, PaginatorComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
