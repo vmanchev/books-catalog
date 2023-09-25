@@ -5,7 +5,7 @@ const sortItems = require('../helpers/sort-items');
 const getPaginatedResult = require('../helpers/get-paginated-result');
 
 module.exports = (req, res) => {
-  let books = getState().books.map((book) => {
+  let books = getState().books?.map((book) => {
     let { description, ...rest } = book;
     return rest;
   });
@@ -17,11 +17,13 @@ module.exports = (req, res) => {
   let page = Number(getFilteredParam(req.query.page)) || 1;
   let limit = Number(getFilteredParam(req.query.limit)) || 5;
 
-  // filter `title` or `author` by `keyword`
-  books = filterByKeyword(books, keyword);
+  if (books?.length) {
+    // filter `title` or `author` by `keyword`
+    books = filterByKeyword(books, keyword);
 
-  // sort by `title` or `author` in selected direction
-  books = sortItems(books, sortProperty, sortDirection);
+    // sort by `title` or `author` in selected direction
+    books = sortItems(books, sortProperty, sortDirection);
+  }
 
   // from the filtered and sorted list of books, get the items for current page
   res.json(getPaginatedResult(books, page, limit));
