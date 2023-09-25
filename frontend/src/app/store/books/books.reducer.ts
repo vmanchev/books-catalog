@@ -1,8 +1,8 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as BooksActions from './books.actions';
 import { Book } from '@models/book.type';
-import { Pagination } from '@models/pagination.type';
 import { Sorting } from '@models/sorting.type';
+import { SortingDirection } from '@app/types/sorting-direction.enum';
 
 export const booksFeatureKey = 'books';
 
@@ -26,7 +26,7 @@ export const initialState: State = {
   totalPages: null,
   sorting: {
     active: 'title',
-    direction: 'asc',
+    direction: SortingDirection.ASC,
   },
   keyword: null,
   isLoading: null,

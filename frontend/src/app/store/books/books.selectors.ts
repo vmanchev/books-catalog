@@ -63,7 +63,7 @@ export const selectPageAndLimit = createSelector(selectBooksState, (state) => ({
 export const getDescriptionByIsbn = (isbn: string) =>
   createSelector(
     selectBooks,
-    (books) => books.find((book) => book.isbn === isbn).description
+    (books) => books.find((book) => book.isbn === isbn)?.description
   );
 
 export const selectError = createSelector(
